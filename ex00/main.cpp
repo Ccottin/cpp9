@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 18:21:45 by ccottin           #+#    #+#             */
+/*   Updated: 2023/03/22 20:17:48 by ccottin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "BitcoinExchange.hpp"
 
 void	BitcoinExchangeLauncher(char *av)
 {
-	std::fstream						database;
-	std::string							line;
+	BitcoinExchange	data;
+	std::fstream	database;
+	std::string		line;
 	
 	database.open(av, std::fstream::in | std::fstream::out);
 	if (!database.is_open())
@@ -12,10 +25,14 @@ void	BitcoinExchangeLauncher(char *av)
 		database.close();
 		exit(1);
 	}
-
-	BitcoinExchange	data;
-
-	data.setList(database);
+	
+	while ( !(std::getline(database, line).eof()) )
+	{
+		if (line.compare("date | value"))
+			continue ;
+		data.printResults(line);
+		line.clear();
+	}
 	database.close();
 }
 
