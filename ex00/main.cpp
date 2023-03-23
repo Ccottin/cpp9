@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:21:45 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/22 20:17:48 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:50:14 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	BitcoinExchangeLauncher(char *av)
 	
 	while ( !(std::getline(database, line).eof()) )
 	{
-		if (line.compare("date | value"))
+		if (!line.compare("date | value"))
 			continue ;
 		data.printResults(line);
 		line.clear();

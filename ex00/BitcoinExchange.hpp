@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:21:47 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/22 20:44:47 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:41:23 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ class	BitcoinExchange
 		BitcoinExchange &operator=(BitcoinExchange const &ref);
 		~BitcoinExchange(void);
 
-		std::map<std::string, std::string>			getBct(void) const;
-		void										printResults(std::string line) const;
+		std::map<std::string, double>		getBct(void) const;
+		void								printResults(std::string line) const;
 		
 	private :
 
 		void	database_feed(void);
 		char	check_date(std::string date) const;
-		std::map<std::string, std::string>	_bct;
+		std::map<std::string, double>	_bct;
 };
 
 #endif
