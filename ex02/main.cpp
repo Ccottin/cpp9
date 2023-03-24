@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:07:03 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/23 20:58:45 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/24 21:27:35 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,36 @@
 
 int		check_digits(int ac, char **av)
 {
-	int	i;
+	unsigned int	i;
 
-	while (ac > 1)
+	while (ac > 0)
 	{
 		i = 0;
-		if (isdigit(av[ac][i]) )
-			i++;
+		while (av[ac][i] && isdigit(av[ac][i]))
+			++i;
+		if (i != strlen(av[ac]))
+			return (1);
+		--ac;
 	}
+	return (0);
 }
 
 int		main(int ac, char **av)
 {
 	if (ac == 1)
+	{
+		std::cout << "Error : format." << std::endl;
+		return (1);
+	}
+	if (check_digits(ac - 1, av))
+	{
+		std::cout << "Error : format." << std::endl;
 		return (0);
-	check_digits(ac, av);
+	}
+
+	PmergeMe	sort(ac - 1, av);
+	
+	sort.sortVector();
 }
+
+//gestion des overflow a faire

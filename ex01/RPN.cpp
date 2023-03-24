@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 18:07:00 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/23 19:47:46 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/24 22:28:14 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ RPN	&RPN::operator=(RPN const &ref)
 RPN::~RPN(void)
 { }
 
-std::vector<long int>	RPN::getRes(void) const
+std::list<long int>	RPN::getRes(void) const
 {
 	return (_res);
 }
@@ -56,7 +56,7 @@ void					RPN::calculate(char sign)
 
 void	RPN::print_elems(void)
 {
-	std::vector<long int>::iterator	it = _res.begin();
+	std::list<long int>::iterator	it = _res.begin();
 	while (it != _res.end())
 	{
 		std::cout << *it << " ";
