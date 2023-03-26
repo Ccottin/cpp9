@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:06:11 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/25 16:08:43 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/26 15:12:01 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ class	PmergeMe
 		void	merge(std::vector<std::pair<unsigned, unsigned> >::iterator pos,
 					unsigned int size, unsigned int middle);
 		void	insert_sort(void);
-		void	binary_insert(std::pair<unsigned, unsigned> insert);
+		void	binary_insert(unsigned insert, std::vector<unsigned>::iterator it,
+					std::vector<unsigned>::iterator ite);
 		void	insert_odd(void);
 
 

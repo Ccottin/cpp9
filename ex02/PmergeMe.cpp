@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:05:22 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/25 17:03:54 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/26 18:06:48 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ std::vector<unsigned>					PmergeMe::getVector(void) const
 
 unsigned	PmergeMe::get_partition_size(unsigned g_size, unsigned p_two)
 {
-	std::cout << "new partit. size = " << (pow(2, p_two) - g_size) << std::endl;
+//	std::cout << "new partit. size = " << (pow(2, p_two) - g_size) << std::endl;
 	return (pow(2, p_two) - g_size);
 }
 	/*vector sort*/
@@ -146,34 +146,34 @@ void	PmergeMe::insert_odd(void)
 
 }
 
-void	PmergeMe::binary_insert(std::pair<unsigned, unsigned> insert)
+void	PmergeMe::binary_insert(unsigned insert, std::vector<unsigned>::iterator it,
+			std::vector<unsigned>::iterator ite)
 {
-	std::vector<unsigned>::iterator	it;
-	std::vector<unsigned>::iterator	ite;
-	unsigned						size;
+	std::vector<unsigned>::iterator	mid;
 
-	ite = std::find(_vsorted.begin(), _vsorted.end(), insert.first);
-	size = (_vsorted.size() - (_vsorted.end() - ite) ) / 2;
-	it = _vsorted.begin();
-	--ite;
+	mid = it + ((ite - it) / 2);
+	std::cout <<"mid = " << *mid << " it puis ite ==" << *it << "  " << *ite << "  insert = " << insert << std::endl;
 
-	std::cout << "testy  " <<  (_vsorted.end() - it ) /2 << std::endl;
-	std::cout << "insert = " << insert.first << " ite = " << *ite << std::endl;
-		std::cout << "ite -it = " << ite - it << "  size = " << size << "   it = " << *it << std::endl;
-	while (ite != it)
+	if (it == ite)
 	{
-		size = size / 2;
-		if (size == 0)
-			size = 1;
-		if (*(ite - size + 1) > insert.second)
-			ite -= size;
-		else
-			it += size;
-		std::cout << "ite -it = " << ite - it << "  size = " << size << "   it = " << *it << std::endl;
+		std::cout << "here : it = " << *it << "  ite = " << *ite;
+		if (insert > *ite)
+			++it;
+		_vsorted.insert(it, insert);
+		std::cout << "  sorted = ";
+		for (it = _vsorted.begin(), ite = _vsorted.end() ; it != ite; it++)
+			std::cout << "  " << *it;
+		std::cout << std::endl;
+
+		return ;
 	}
-	std::cout << "test ; first = " << insert.first << " second = " << insert.second
-		<< " ~~ it = " << *it << std::endl;
-	_vsorted.insert(it, insert.second);
+
+	if (it == mid && insert < *ite)
+		ite = mid;
+	else if (it == mid && insert > *it)
+		++mid;
+	insert < *mid ? binary_insert(insert, it, mid) : binary_insert(insert, mid, ite);
+	return ;
 }
 
 void	PmergeMe::insert_sort(void)
@@ -195,24 +195,25 @@ void	PmergeMe::insert_sort(void)
 
 
 	std::vector<unsigned >::iterator itt = _vector.begin();
-		itt = _vsorted.begin();
+/*		itt = _vsorted.begin();
 		while (itt != _vsorted.end())
 		{
 			std::cout << *itt << "     ";
 			++itt;
 		}
-
+*/
 
 
 	it = _vpaired.begin() + 1;
 	g_size = 2;
 	p_two = 2;
-	u = g_size - 1;
+	u = g_size;
 	while (it < _vpaired.end())
 	{
 		--u;
-		std::cout << "u = " << u << std::endl;
-		binary_insert(*(it + u));
+		std::cout << "u = " << u << " truc = " << (it + u)->first << std::endl;
+		binary_insert((it + u)->second, _vsorted.begin(),
+				(std::find(_vsorted.begin(), _vsorted.end(), (it + u)->first)) - 1);
 		if (u == 0)
 		{
 			it += g_size;
@@ -230,7 +231,10 @@ void	PmergeMe::insert_sort(void)
 		}
 	}
 	if (_isodd)
-		insert_odd();
+	{
+		std::cout << "isodd\n";
+		binary_insert(_leftover, _vsorted.begin(), _vsorted.end() - 1);
+	}
 }
 
 void	PmergeMe::sortVector(void) 
@@ -257,13 +261,13 @@ void	PmergeMe::sortVector(void)
 	}
 
 	std::vector<std::pair<unsigned, unsigned> >::iterator it = _vpaired.begin();
-	std::cout << "before sort\n";
+/*	std::cout << "before sort\n";
 	while(it != _vpaired.end())
 	{
 		std::cout << it->first << "     " << it->second << std::endl;
 		it++;
 	}
-
+*/
 	merge_sort(_vpaired.size(), _vpaired.begin());
 	std::cout << "\naftere sort\n";
 
@@ -283,4 +287,6 @@ void	PmergeMe::sortVector(void)
 		std::cout << *itt << "     ";
 		++itt;
 	}
+	if (std::is_sorted(_vsorted.begin(), _vsorted.end()))
+		std::cout << "isGood, size =  " << _vsorted.size() << "\n";
 }

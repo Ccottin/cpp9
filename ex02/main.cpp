@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:07:03 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/25 12:54:33 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/26 18:02:06 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		main(int ac, char **av)
 	PmergeMe	sort(ac - 1, av);
 	
 	sort.sortVector();
+	std::cout << " ac = " << ac - 1;
 //	std::cout << "ac= " << ac << std::endl;
 }
 
