@@ -6,13 +6,13 @@
 #    By: ccottin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/03 12:16:24 by ccottin           #+#    #+#              #
-#    Updated: 2023/03/26 17:23:31 by ccottin          ###   ########.fr        #
+#    Updated: 2023/03/27 17:29:31 by ccottin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= PmergeMe
 
-SRCS	= main.cpp PmergeMe.cpp
+SRCS	= main.cpp PmergeMe.cpp DPmergeMe.cpp
 
 CC		= c++
 
