@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:07:03 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/28 15:12:56 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 21:10:49 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,16 @@
 int		check_digits(int ac, char **av)
 {
 	unsigned int	i;
-//	int				tmp; //HEREE PLUS MODIF
-//	std::set<unsigned>	check;
 
-	//tmp = ac;
 	while (ac > 0)
 	{
 		i = 0;
 		while (av[ac][i] && isdigit(av[ac][i]))
-			++i;
+			++i; //here, overflow
 		if (i != strlen(av[ac]))
 			return (1);
 		--ac;
 	}
-
-/*	while (tmp > 0)
-	{
-		if (check.insert(atoi(av[tmp])).second == false)
-		{
-			std::cout << "found a double!" << std::endl;
-			return (1);
-		}
-		--tmp;
-	}*/
-
 	return (0);
 }
 
@@ -63,6 +49,4 @@ int		main(int ac, char **av)
 
 
 	sort.printResults(av, ac);
-}
-
-//gestion des overflow a faire
+} //oveflow si + de l'int et non de l unsign

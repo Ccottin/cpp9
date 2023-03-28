@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:05:22 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/28 20:04:02 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 21:13:53 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ clock_t									PmergeMe::getVtime(void) const
 
 unsigned	PmergeMe::get_partition_size(unsigned g_size, unsigned p_two)
 {
-//	std::cout << "new partit. size = " << (pow(2, p_two) - g_size) << std::endl;
 	return (pow(2, p_two) - g_size);
 }
 
