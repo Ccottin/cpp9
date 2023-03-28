@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:05:22 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/28 15:22:13 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 20:04:02 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,10 @@ void	PmergeMe::insert_sort(void)
 	}
 
 	it = _vpaired.begin() + 1;
-	g_size = 2;
+	if (_vpaired.size() == 2)
+		g_size = 1;	
+	else
+		g_size = 2;
 	p_two = 2;
 	u = g_size;
 	while (it < _vpaired.end())
@@ -238,14 +241,19 @@ void	PmergeMe::sortVector(int ac, char **av)
 		_vector.push_back(atoi(av[tmp]));
 		++tmp;
 	}
+
 	if (is_sorted(_vector.begin(), _vector.end()))
-	{	std::cout << "is sorted";
+	{
+		_vsorted = _vector;
+		_vtime = clock() - _vtime;
+		return ;
 	}
 	
 	size = _vector.size();
 	index = 0;
-	std::vector<unsigned >::iterator itt = _vector.begin();
+	std::vector<unsigned >::iterator itt;
 	itt = _vector.begin();
+
 	while (size - index > 1)
 	{
 		if (*(itt + index) > *(itt + index + 1) )
@@ -254,6 +262,7 @@ void	PmergeMe::sortVector(int ac, char **av)
 			_vpaired.push_back(std::make_pair(_vector[index + 1], _vector[index]));
 		index += 2;
 	}
+	
 	if (size - index == 1)
 	{
 		_leftover = _vector[index];
@@ -265,6 +274,6 @@ void	PmergeMe::sortVector(int ac, char **av)
 
 	_vtime = clock() - _vtime;
 
-	if (std::is_sorted(_vsorted.begin(), _vsorted.end()))
+	if (is_sorted(_vsorted.begin(), _vsorted.end()))
 	std::cout << "isGood, size =  " << _vsorted.size() << "\n";
 }

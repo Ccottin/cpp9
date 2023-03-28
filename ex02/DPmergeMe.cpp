@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:59:18 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/28 15:22:15 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 20:03:33 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	PmergeMe::insert_sort2(void)
 	}
 	_dsorted.push_front(_dpaired.begin()->second);
 	it = _dpaired.begin() + 1;
-	g_size = 2;
+	if (_vpaired.size() == 2)
+		g_size = 1;	
+	else
+		g_size = 2;
 	p_two = 2;
 	u = g_size;
 	while (it < _dpaired.end())
@@ -149,14 +152,19 @@ void	PmergeMe::sortDeque(int ac, char **av)
 		--ac;
 	}
 
-	if (is_sorted(_vector.begin(), _vector.end()))
-	{	std::cout << "is sorted";
+		
+	if (is_sorted(_deque.begin(), _deque.end()))
+	{
+		_dsorted = _deque;
+		_dtime = clock() - _dtime;
+		return ;
 	}
 
 	size = _deque.size();
 	index = 0;
-	std::deque<unsigned>::iterator it = _deque.begin();
+	std::deque<unsigned >::iterator it;
 	it = _deque.begin();
+
 	while (size - index > 1)
 	{
 		if (*(it + index) > *(it + index + 1) )
@@ -172,20 +180,13 @@ void	PmergeMe::sortDeque(int ac, char **av)
 		_leftover = _deque[index];
 		_isodd = true;
 	}	
-
+				
 	merge_sort2(_dpaired.size(), _dpaired.begin());
-
-//	std::deque<std::pair<unsigned, unsigned> >::iterator  itt = _dpaired.begin();
-//	for (;itt != _dpaired.end(); itt++)
-//		std::cout << itt->first << "     " << itt->second << std::endl;
 	insert_sort2();
-//	for (std::deque<unsigned>::iterator  it = _dsorted.begin(); it != _dsorted.end(); it++)
-//		std::cout << *it << "     ";
-//	std::cout << std::endl;
 
 	_dtime = clock() - _dtime;
 	struct timeval temp;
 	gettimeofday(&temp, NULL);
-	if (std::is_sorted(_dsorted.begin(), _dsorted.end()))
+	if (is_sorted(_dsorted.begin(), _dsorted.end()))
 		std::cout << "isGood, size =  " << _dsorted.size() << "\n";
 }

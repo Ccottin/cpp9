@@ -6,7 +6,7 @@
 #    By: ccottin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/03 12:16:24 by ccottin           #+#    #+#              #
-#    Updated: 2023/03/27 17:29:31 by ccottin          ###   ########.fr        #
+#    Updated: 2023/03/28 20:00:54 by ccottin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS	= $(SRCS:.cpp=.o)
 
 DEPS	= $(OBJS:.o=.d)
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++11 -MMD -g3
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -MMD -g3
 
 all:	$(NAME)
 
