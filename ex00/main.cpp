@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:21:45 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/23 14:50:14 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 20:26:14 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	BitcoinExchangeLauncher(char *av)
 	{
 		std::cerr << "Error: could not open file." << std::endl;
 		database.close();
-		exit(1);
+		return ;
 	}
 	
 	while ( !(std::getline(database, line).eof()) )
