@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:05:22 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/27 17:36:29 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 15:22:13 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,8 @@
 
 /*	Constructors */
 
-PmergeMe::PmergeMe(void)
+PmergeMe::PmergeMe(void) : _isodd(false)
 { }
-
-PmergeMe::PmergeMe(int ac, char **av)
-{
-	int	tmp;
-	
-	tmp = 1;
-	while (tmp < ac + 1)
-	{
-		_vector.push_back(atoi(av[tmp]));
-		++tmp;
-	}
-	while (ac > 0)
-	{
-		_deque.push_front(atoi(av[ac]));
-		--ac;
-	}
-	_isodd = false;
-}
 
 PmergeMe::PmergeMe(PmergeMe const &ref)
 { 
@@ -91,10 +73,11 @@ unsigned								PmergeMe::getLeftover(void) const
 	return (_leftover);
 }
 
-time_t									PmergeMe::getVtime(void) const
+clock_t									PmergeMe::getVtime(void) const
 {
 	return (_vtime);
 }
+
 /*	Utilities	*/
 
 unsigned	PmergeMe::get_partition_size(unsigned g_size, unsigned p_two)
@@ -116,14 +99,16 @@ void		PmergeMe::printResults(char **av, int ac)
 		std::cout << *it << " ";
 	std::cout << std::endl;
 	
+	std::cout.precision(5);
 	std::cout << "Time to process a range of " << _vsorted.size()
-		<< " elements with std::vector : " <<  _vtime << " us"
-		<< std::endl;
-	// a verifier le us
+		<< " elements with std::vector : "
+		<< std::fixed << (double)_vtime / CLOCKS_PER_SEC * 1000000 
+		<< " us" << std::endl;
 
 	std::cout << "Time to process a range of " << _dsorted.size()
-		<< " elements with std::deque : " <<  _dtime << " us";
-	/*DO A FIXED COMA FOR BETTER RANGE OF SECS*/
+		<< " elements with std::deque  : "
+		<< (double)_dtime / CLOCKS_PER_SEC * 1000000 
+		<< " us" << std::endl;
 }
 
 
@@ -181,9 +166,9 @@ void	PmergeMe::binary_insert(unsigned insert, std::vector<unsigned>::iterator it
 	std::vector<unsigned>::iterator	mid;
 
 	mid = it + ((ite - it) / 2);
-	if (it == ite)
+	if (it == ite || insert == *it)
 	{
-		if (insert > *ite)
+		if (insert != *it && insert > *ite)
 			++it;
 		_vsorted.insert(it, insert);
 		return ;
@@ -239,12 +224,24 @@ void	PmergeMe::insert_sort(void)
 }
 
 
-void	PmergeMe::sortVector(void) 
+void	PmergeMe::sortVector(int ac, char **av) 
 {
 	unsigned int	index;
 	unsigned int	size;
+	int				tmp;
 
-	_vtime = time(NULL);
+	_vtime = clock();
+
+	tmp = 1;
+	while (tmp < ac)
+	{
+		_vector.push_back(atoi(av[tmp]));
+		++tmp;
+	}
+	if (is_sorted(_vector.begin(), _vector.end()))
+	{	std::cout << "is sorted";
+	}
+	
 	size = _vector.size();
 	index = 0;
 	std::vector<unsigned >::iterator itt = _vector.begin();
@@ -266,7 +263,8 @@ void	PmergeMe::sortVector(void)
 	merge_sort(_vpaired.size(), _vpaired.begin());
 	insert_sort();
 
-	_vtime = time(NULL) - _vtime;
+	_vtime = clock() - _vtime;
+
 	if (std::is_sorted(_vsorted.begin(), _vsorted.end()))
 	std::cout << "isGood, size =  " << _vsorted.size() << "\n";
 }

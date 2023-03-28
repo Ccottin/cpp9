@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:06:11 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/27 17:24:55 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 15:18:22 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <algorithm>
 # include <set>
 # include <ctime>
+#include <sys/time.h>
 
 class	PmergeMe
 {
@@ -31,7 +32,6 @@ class	PmergeMe
 		/*constructors*/
 
 		PmergeMe(void);
-		PmergeMe(int ac, char **av);
 		PmergeMe(PmergeMe const &ref);
 		PmergeMe	operator=(PmergeMe const &ref);
 		~PmergeMe(void);
@@ -52,8 +52,8 @@ class	PmergeMe
 	
 		/*start sort*/
 
-		void							sortVector(void);
-		void							sortDeque(void);
+		void							sortVector(int ac, char **av);
+		void							sortDeque(int ac, char **av);
 		void							printResults(char **av, int ac);
 
 	private:
@@ -76,7 +76,7 @@ class	PmergeMe
 		std::vector<unsigned int>							_vector;
 		std::vector<unsigned int>							_vsorted;
 		std::vector<std::pair<unsigned int, unsigned int> >	_vpaired;
-		time_t												_vtime;
+		clock_t												_vtime;
 
 		
 		/*deque sort*/
@@ -95,11 +95,28 @@ class	PmergeMe
 		std::deque<unsigned int>							_deque;
 		std::deque<unsigned int>							_dsorted;
 		std::deque<std::pair<unsigned int, unsigned int> >	_dpaired;
-		time_t												_dtime;
+		clock_t												_dtime;
 
 
 
 		/*commons functions*/
+
+		template <class ForwardIterator>
+		bool is_sorted (ForwardIterator first, ForwardIterator last)
+		{
+			if (first == last)
+				return (true);
+
+			ForwardIterator next;
+			next = first;
+			while (++next != last)
+			{
+				if (*next < *first)
+					return (false);
+				++first;
+			}
+			return (true);
+		}
 
 		unsigned	get_partition_size(unsigned g_size, unsigned p_two);
 

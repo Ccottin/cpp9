@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:07:03 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/27 17:20:42 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 15:12:56 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int		check_digits(int ac, char **av)
 {
 	unsigned int	i;
-	int				tmp; //HEREE PLUS MODIF
-	std::set<unsigned>	check;
+//	int				tmp; //HEREE PLUS MODIF
+//	std::set<unsigned>	check;
 
-	tmp = ac;
+	//tmp = ac;
 	while (ac > 0)
 	{
 		i = 0;
@@ -29,7 +29,7 @@ int		check_digits(int ac, char **av)
 		--ac;
 	}
 
-	while (tmp > 0)
+/*	while (tmp > 0)
 	{
 		if (check.insert(atoi(av[tmp])).second == false)
 		{
@@ -37,7 +37,7 @@ int		check_digits(int ac, char **av)
 			return (1);
 		}
 		--tmp;
-	}
+	}*/
 
 	return (0);
 }
@@ -55,10 +55,10 @@ int		main(int ac, char **av)
 		return (1);
 	}
 
-	PmergeMe	sort(ac - 1, av);
+	PmergeMe	sort;
 	
-	sort.sortVector();
-	sort.sortDeque();
+	sort.sortVector(ac, av);
+	sort.sortDeque(ac, av);
 	std::cout << " ac = " << ac - 1 << std::endl << std::endl;
 
 

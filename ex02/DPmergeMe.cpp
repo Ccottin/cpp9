@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:59:18 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/27 17:29:55 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/28 15:22:15 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ std::deque<unsigned>					PmergeMe::getDSorted(void) const
 	return (_dsorted);
 }
 
-time_t									PmergeMe::getDtime(void) const
+clock_t									PmergeMe::getDtime(void) const
 {
 	return (_dtime);
 }
@@ -43,15 +43,15 @@ void	PmergeMe::binary_insert2(unsigned insert, std::deque<unsigned>::iterator it
 	std::deque<unsigned>::iterator	mid;
 
 	mid = it + ((ite - it) / 2);
-	if (it == ite)
+	if (it == ite || insert == *it)
 	{
-		if (insert > *ite)
+		if (insert != *it && insert > *ite)
 			++it;
 		_dsorted.insert(it, insert);
 		return ;
 	}
 
-	if (it == mid && insert < *ite)
+	else if (it == mid && insert < *ite)
 		ite = mid;
 	else if (it == mid && insert > *it)
 		++mid;
@@ -135,12 +135,24 @@ void	PmergeMe::merge_sort2(unsigned size, std::deque<std::pair<unsigned, unsigne
 	merge2(pos, size, middle);
 }
 
-void	PmergeMe::sortDeque(void)
+void	PmergeMe::sortDeque(int ac, char **av)
 {
 	unsigned int	index;
 	unsigned int	size;
 
-	_dtime = time(NULL);
+	_dtime = clock();
+
+	--ac;
+	while (ac > 0)
+	{
+		_deque.push_front(atoi(av[ac]));
+		--ac;
+	}
+
+	if (is_sorted(_vector.begin(), _vector.end()))
+	{	std::cout << "is sorted";
+	}
+
 	size = _deque.size();
 	index = 0;
 	std::deque<unsigned>::iterator it = _deque.begin();
@@ -171,7 +183,9 @@ void	PmergeMe::sortDeque(void)
 //		std::cout << *it << "     ";
 //	std::cout << std::endl;
 
-	_dtime = time(NULL) - _dtime;
+	_dtime = clock() - _dtime;
+	struct timeval temp;
+	gettimeofday(&temp, NULL);
 	if (std::is_sorted(_dsorted.begin(), _dsorted.end()))
 		std::cout << "isGood, size =  " << _dsorted.size() << "\n";
 }
