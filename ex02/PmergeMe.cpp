@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:05:22 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/28 21:13:53 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/30 15:56:31 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,16 +228,22 @@ void	PmergeMe::insert_sort(void)
 
 void	PmergeMe::sortVector(int ac, char **av) 
 {
-	unsigned int	index;
-	unsigned int	size;
-	int				tmp;
+	unsigned int		index;
+	unsigned long int	size;
+	int					tmp;
 
 	_vtime = clock();
 
 	tmp = 1;
 	while (tmp < ac)
 	{
-		_vector.push_back(atoi(av[tmp]));
+		size = atoi(av[tmp]);
+		if (size > 4294967295)
+		{
+			std::cout << "Error" << std::endl;
+			return ;
+		}
+		_vector.push_back(size);
 		++tmp;
 	}
 

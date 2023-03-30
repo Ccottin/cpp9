@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:59:18 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/28 20:03:33 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/30 15:57:43 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,21 @@ void	PmergeMe::merge_sort2(unsigned size, std::deque<std::pair<unsigned, unsigne
 
 void	PmergeMe::sortDeque(int ac, char **av)
 {
-	unsigned int	index;
-	unsigned int	size;
+	unsigned int		index;
+	unsigned long int	size;
 
 	_dtime = clock();
 
 	--ac;
 	while (ac > 0)
 	{
-		_deque.push_front(atoi(av[ac]));
+		size = atoi(av[ac]);
+		if (size > 4294967295)
+		{
+			std::cout << "Error" << std::endl;
+			return ;
+		}
+		_deque.push_front(size);
 		--ac;
 	}
 
