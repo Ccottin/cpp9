@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:05:22 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/30 15:56:31 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:09:34 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,8 +231,11 @@ void	PmergeMe::sortVector(int ac, char **av)
 	unsigned int		index;
 	unsigned long int	size;
 	int					tmp;
+	struct timeval		tv;
+	struct timeval		tvb;
 
-	_vtime = clock();
+	if (gettimeofday(&tvb, NULL))
+			exit (1);
 
 	tmp = 1;
 	while (tmp < ac)
@@ -250,7 +253,9 @@ void	PmergeMe::sortVector(int ac, char **av)
 	if (is_sorted(_vector.begin(), _vector.end()))
 	{
 		_vsorted = _vector;
-		_vtime = clock() - _vtime;
+		if (gettimeofday(&tv, NULL))
+			exit (1);
+		_vtime = tv.tv_sec * 1000000 + tv.tv_usec - (tvb.tv_sec * 1000000 + tvb.tv_usec);
 		return ;
 	}
 	
@@ -277,8 +282,12 @@ void	PmergeMe::sortVector(int ac, char **av)
 	merge_sort(_vpaired.size(), _vpaired.begin());
 	insert_sort();
 
-	_vtime = clock() - _vtime;
+	if (gettimeofday(&tv, NULL))
+			exit (1);
+	_vtime = tv.tv_sec * 1000000 + tv.tv_usec - (tvb.tv_sec * 1000000 + tvb.tv_usec);
 
+/*	uncomment this part to check if it is actually sorted 
 	if (is_sorted(_vsorted.begin(), _vsorted.end()))
 	std::cout << "isGood, size =  " << _vsorted.size() << "\n";
+*/
 }

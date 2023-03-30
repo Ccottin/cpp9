@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:59:18 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/30 15:57:43 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:12:35 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	PmergeMe::merge2(std::deque<std::pair<unsigned, unsigned> >::iterator pos,
 	s = size;
 	i = 0;
 
-	while (tmp.size() < size) //maybe size + 1?
+	while (tmp.size() < size)
 	{
 		if (m == size)
 			tmp.push_back(*(pos + i++));
@@ -140,20 +140,19 @@ void	PmergeMe::merge_sort2(unsigned size, std::deque<std::pair<unsigned, unsigne
 
 void	PmergeMe::sortDeque(int ac, char **av)
 {
-	unsigned int		index;
 	unsigned long int	size;
+	unsigned int		index;
+	struct timeval		tv;
+	struct timeval		tvb;
 
-	_dtime = clock();
-
+	if (gettimeofday(&tvb, NULL))
+			exit (1);
 	--ac;
 	while (ac > 0)
 	{
 		size = atoi(av[ac]);
 		if (size > 4294967295)
-		{
-			std::cout << "Error" << std::endl;
 			return ;
-		}
 		_deque.push_front(size);
 		--ac;
 	}
@@ -162,7 +161,9 @@ void	PmergeMe::sortDeque(int ac, char **av)
 	if (is_sorted(_deque.begin(), _deque.end()))
 	{
 		_dsorted = _deque;
-		_dtime = clock() - _dtime;
+		if (gettimeofday(&tv, NULL))
+			exit (1);
+		_dtime = tv.tv_sec * 1000000 + tv.tv_usec - (tvb.tv_sec * 1000000 + tvb.tv_usec);
 		return ;
 	}
 
@@ -185,14 +186,17 @@ void	PmergeMe::sortDeque(int ac, char **av)
 	{
 		_leftover = _deque[index];
 		_isodd = true;
-	}	
+	}
 				
 	merge_sort2(_dpaired.size(), _dpaired.begin());
 	insert_sort2();
 
-	_dtime = clock() - _dtime;
-	struct timeval temp;
-	gettimeofday(&temp, NULL);
+	if (gettimeofday(&tv, NULL))
+			exit (1);
+	_dtime = tv.tv_sec * 1000000 + tv.tv_usec - (tvb.tv_sec * 1000000 + tvb.tv_usec);
+
+/*	uncomment this part to check if it is actually sorted 
 	if (is_sorted(_dsorted.begin(), _dsorted.end()))
 		std::cout << "isGood, size =  " << _dsorted.size() << "\n";
+*/
 }

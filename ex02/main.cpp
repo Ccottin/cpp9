@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 20:07:03 by ccottin           #+#    #+#             */
-/*   Updated: 2023/03/28 21:10:49 by ccottin          ###   ########.fr       */
+/*   Updated: 2023/03/30 17:19:16 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		check_digits(int ac, char **av)
 	{
 		i = 0;
 		while (av[ac][i] && isdigit(av[ac][i]))
-			++i; //here, overflow
+			++i;
 		if (i != strlen(av[ac]))
 			return (1);
 		--ac;
@@ -45,8 +45,9 @@ int		main(int ac, char **av)
 	
 	sort.sortVector(ac, av);
 	sort.sortDeque(ac, av);
-	std::cout << " ac = " << ac - 1 << std::endl << std::endl;
 
+	if (sort.getVSorted().size() == 0)
+		return (1);
 
 	sort.printResults(av, ac);
-} //oveflow si + de l'int et non de l unsign
+}
